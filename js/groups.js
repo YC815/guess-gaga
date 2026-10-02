@@ -1,6 +1,7 @@
 // 「猜歌手」模式的歌單。四個選項都從同一個歌單裡挑，
 // 所以同一個歌單裡的歌手要聲線、曲風、年代相近，才不會一聽語言或曲風就猜得出來。
 // 女聲、男聲、樂團分開放；灣聲樂團是純器樂，不放進任何歌單。
+// 只作曲、製作不主唱的人（Pritam、Sachin-Jigar、Metro Boomin）也不放，他們的歌是別的歌手唱的。
 const GROUP_RANKS = ["耳朵是雷達吧？👂", "聽聲辨人高手 🎧", "還在暖耳朵 🎶", "先多聽幾首再來 📀"];
 
 window.GROUPS = [
@@ -18,7 +19,7 @@ window.GROUPS = [
     icon: "👑",
     desc: "全是華語女聲，要聽得出誰是誰",
     colors: { accent: "#d586a8", accent2: "#dfb9c9", onAccent: "#29141d" },
-    artists: ["jolin", "amei", "hebe", "rainie", "cyndi", "angelachang", "she", "reneliu", "lala", "maggiechiang", "eveai", "naiwen", "cheerchen", "waawei", "deserts", "faye", "naying", "janezhang", "9m88", "stefanie", "fishleong", "tanya", "elva", "alin", "christinefan", "rachelliang", "clairekuo", "tigerhuang", "pennytai", "mavisfan", "tarcysu", "jesslee", "della", "kimberley", "juliawu", "zhangbichen", "shanyichun", "liyuchun", "tanweiwei", "bibizhou", "huangxiaoyun", "yisayu", "chenli", "wangjingwen"],
+    artists: ["jolin", "amei", "hebe", "rainie", "cyndi", "angelachang", "she", "reneliu", "lala", "maggiechiang", "eveai", "naiwen", "cheerchen", "waawei", "deserts", "faye", "naying", "janezhang", "9m88", "stefanie", "fishleong", "tanya", "elva", "alin", "christinefan", "rachelliang", "clairekuo", "tigerhuang", "pennytai", "mavisfan", "tarcysu", "jesslee", "della", "kimberley", "juliawu", "zhangbichen", "shanyichun", "liyuchun", "tanweiwei", "bibizhou", "huangxiaoyun", "yisayu", "chenli", "wangjingwen", "hanhong", "fangdong"],
   },
   {
     id: "zh-male",
@@ -26,7 +27,7 @@ window.GROUPS = [
     icon: "🎤",
     desc: "從情歌王子到創作才子，全是華語男歌手",
     colors: { accent: "#86d5cd", accent2: "#b9dfbf", onAccent: "#142927" },
-    artists: ["jay", "yoga", "jamhsiao", "ericchou", "weibird", "davidtao", "wilberpan", "crowdlu", "hsiao", "wakin", "richiejen", "harlemyu", "ayue", "qingfeng", "ronghao", "joker", "zhoushen", "maobuyi", "huachenyu", "lijian", "pushu", "chyichin", "jonathanlee", "tomchang", "jjlin", "leehom", "showlo", "jeffchang", "bii", "terrylin", "philchang", "michaelwong", "victorwong", "samlee", "garychaw", "nickylee", "aska", "alienhuang", "aaronyan", "xiaobingchih", "ninechen", "fengze", "zhengxing", "leeyuting", "chihsiou", "rchord", "silence", "xusong", "jasonzhang", "roywang", "jacksonyee", "karrywang", "kun", "lay", "luhan", "liuyuning", "zhengrunze", "huxia", "zhangyuan", "laofan", "huangzihongfan", "jinzhiwen", "xuwei", "songdongye", "zhaolei"],
+    artists: ["jay", "yoga", "jamhsiao", "ericchou", "weibird", "davidtao", "wilberpan", "crowdlu", "hsiao", "wakin", "richiejen", "harlemyu", "ayue", "qingfeng", "ronghao", "joker", "zhoushen", "maobuyi", "huachenyu", "lijian", "pushu", "chyichin", "jonathanlee", "tomchang", "jjlin", "leehom", "showlo", "jeffchang", "bii", "terrylin", "philchang", "michaelwong", "victorwong", "samlee", "garychaw", "nickylee", "aska", "alienhuang", "aaronyan", "xiaobingchih", "ninechen", "fengze", "zhengxing", "leeyuting", "chihsiou", "rchord", "silence", "xusong", "jasonzhang", "roywang", "jacksonyee", "karrywang", "kun", "lay", "luhan", "liuyuning", "zhengrunze", "huxia", "zhangyuan", "laofan", "huangzihongfan", "jinzhiwen", "xuwei", "songdongye", "zhaolei", "daolang", "wangfeng", "tfboys", "tnt"],
   },
   {
     id: "tw-band",
@@ -41,7 +42,7 @@ window.GROUPS = [
     name: "華語饒舌",
     icon: "🎙️",
     desc: "熱狗、蛋堡、瘦子、GAI……聽 flow 認人",
-    colors: { accent: "#d5c186", accent2: "#b9dfd3", onAccent: "#292414" },
+    colors: { accent: "#d59c86", accent2: "#b9c9df", onAccent: "#291a14" },
     artists: ["mchotdog", "softlipa", "eso", "shou", "osn", "gugu", "nickthereal", "mj116", "gai", "higherbrothers", "ayue", "wilberpan"],
   },
   {
@@ -82,7 +83,7 @@ window.GROUPS = [
     icon: "💜",
     desc: "BTS、BLACKPINK、TWICE……韓國流行樂",
     colors: { accent: "#9086d5", accent2: "#b9d8df", onAccent: "#171429" },
-    artists: ["bts", "blackpink", "twice", "newjeans", "straykids", "psy", "iu", "ive", "akmu", "cortis", "ioi", "rescene", "aespa", "lesserafim", "seventeen", "idle", "illit", "babymonster", "day6", "bigbang", "gdragon", "rose", "jennie", "jisoo", "jimin", "jungkook", "txt", "enhypen", "nctdream", "exo", "redvelvet", "snsd", "mamamoo", "itzy", "kissoflife", "riize", "boynextdoor", "zb1", "ateez", "taeyeon", "qwer", "plave", "hearts2hearts", "meovv", "tws", "nmixx", "shinee", "superjunior", "2ne1", "limyoungwoong"],
+    artists: ["bts", "blackpink", "twice", "newjeans", "straykids", "psy", "iu", "ive", "akmu", "cortis", "ioi", "rescene", "aespa", "lesserafim", "seventeen", "idle", "illit", "babymonster", "day6", "bigbang", "gdragon", "rose", "jennie", "jisoo", "jimin", "jungkook", "txt", "enhypen", "nctdream", "exo", "redvelvet", "snsd", "mamamoo", "itzy", "kissoflife", "riize", "boynextdoor", "zb1", "ateez", "taeyeon", "qwer", "plave", "hearts2hearts", "meovv", "tws", "nmixx", "shinee", "superjunior", "2ne1", "limyoungwoong", "lisa"],
   },
   {
     id: "west-diva",
@@ -106,7 +107,7 @@ window.GROUPS = [
     icon: "🧢",
     desc: "Eminem、Drake、Kendrick……聽 flow 認人",
     colors: { accent: "#d5c186", accent2: "#dfc5b9", onAccent: "#292414" },
-    artists: ["drake", "eminem", "kendrick", "travisscott", "future", "nickiminaj", "cardib", "jayz", "snoop", "fiftycent", "postmalone", "tyler", "carti", "21savage", "lilbaby", "lilnasx", "megan", "doechii", "jcole", "jackharlow", "metroboomin", "juicewrld", "kidlaroi", "pitbull"],
+    artists: ["drake", "eminem", "kendrick", "travisscott", "future", "nickiminaj", "cardib", "jayz", "snoop", "fiftycent", "postmalone", "tyler", "carti", "21savage", "lilbaby", "lilnasx", "megan", "doechii", "jcole", "jackharlow", "juicewrld", "kidlaroi", "pitbull"],
   },
   {
     id: "rock",
@@ -138,7 +139,7 @@ window.GROUPS = [
     icon: "🪷",
     desc: "寶萊塢配樂與泰國流行樂",
     colors: { accent: "#d5ad86", accent2: "#b9dfdc", onAccent: "#291f14" },
-    artists: ["arijit", "rahman", "shreya", "bodyslam", "palmy", "phum", "pritam", "anirudh", "sachinjigar", "diljit", "adityarikhari", "anuvjain", "jasleen", "lisa", "jeffsatur", "tillybirds", "fhero", "saran", "4eve", "threemandown"],
+    artists: ["arijit", "rahman", "shreya", "bodyslam", "palmy", "phum", "anirudh", "diljit", "adityarikhari", "anuvjain", "jasleen", "jeffsatur", "tillybirds", "fhero", "saran", "4eve", "threemandown"],
   },
 ];
 

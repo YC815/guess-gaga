@@ -1,5 +1,6 @@
 // 可選的歌手。clues 對應 js/clues/ 裡手寫的題庫；沒有題庫的歌手，線索模式改用 iTunes 資料自動出題。
 // 沒寫到的欄位（tagline、ranks、colors、icon、countries）會用所屬地區的預設值。
+// related：同團的團員或所屬團體，猜歌手模式不會讓他們同時出現在選項裡。
 
 window.REGIONS = [
   { id: "tw", name: "台灣", icon: "🎤", countries: ["tw", "us"], colors: { accent: "#86d5cd", accent2: "#b9dfbf", onAccent: "#142927" } },
@@ -19,7 +20,7 @@ window.ARTISTS = [
   { region: "tw", id: "mayday", name: "五月天", terms: ["五月天", "Mayday"], match: /五月天|^mayday\b(?! parade)/i },
   { region: "tw", id: "jolin", name: "蔡依林", terms: ["蔡依林", "Jolin Tsai"], match: /蔡依林|jolin tsai/i },
   { region: "tw", id: "amei", name: "張惠妹", terms: ["張惠妹", "A-Mei"], match: /張惠妹|张惠妹|a-?mei|阿密特/i },
-  { region: "tw", id: "hebe", name: "田馥甄", terms: ["田馥甄", "Hebe Tien"], match: /田馥甄|hebe tien/i },
+  { region: "tw", id: "hebe", name: "田馥甄", terms: ["田馥甄", "Hebe Tien"], match: /田馥甄|hebe tien/i, related: ["she"] },
   { region: "tw", id: "yoga", name: "林宥嘉", terms: ["林宥嘉", "Yoga Lin"], match: /林宥嘉|yoga lin/i },
   { region: "tw", id: "accusefive", name: "告五人", terms: ["告五人", "Accusefive"], match: /告五人|accusefive/i },
   { region: "tw", id: "crowdlu", name: "盧廣仲", terms: ["盧廣仲", "Crowd Lu"], match: /盧廣仲|卢广仲|crowd lu/i },
@@ -375,7 +376,7 @@ window.ARTISTS.push(
   more("tw", "bestards", "理想混蛋", ["理想混蛋", "Bestards"], /理想混蛋|bestards/i),
   more("tw", "sweetjohn", "甜約翰", ["甜約翰", "Sweet John"], /甜約翰|甜约翰|sweet john/i),
   more("tw", "lotayu", "羅大佑", ["羅大佑", "Lo Ta-yu"], /羅大佑|罗大佑|lo ta-?yu/i),
-  more("tw", "tsaichin", "蔡琴", ["蔡琴", "Tsai Chin"], /^蔡琴($|\s*[,&])|tsai chin/i),
+  more("tw", "tsaichin", "蔡琴", ["蔡琴", "Tsai Chin"], /^蔡琴($|\s*[,&])|^tsai chin(\s*[,&]|$)/i),
   more("tw", "winniehsin", "辛曉琪", ["辛曉琪", "Winnie Hsin"], /辛曉琪|辛晓琪|winnie hsin/i),
   more("tw", "wanfang", "萬芳", ["萬芳"], /^(萬芳|万芳)($|\s*[,&])/),
 
@@ -402,9 +403,9 @@ window.ARTISTS.push(
   more("cn", "silence", "汪蘇瀧", ["汪蘇瀧", "汪苏泷", "Silence Wang"], /汪蘇瀧|汪苏泷|silence wang/i),
   more("cn", "xusong", "許嵩", ["許嵩", "许嵩", "Vae"], /許嵩|许嵩/),
   more("cn", "jasonzhang", "張杰", ["張杰", "张杰", "Jason Zhang"], /^(張杰|张杰)($|\s*[,&])|^jason zhang(\s*[,&]|$)/i),
-  more("cn", "roywang", "王源", ["王源", "Roy Wang"], /^王源($|\s*[,&])|^roy wang(\s*[,&]|$)/i),
-  more("cn", "jacksonyee", "易烊千璽", ["易烊千璽", "易烊千玺", "Jackson Yee"], /易烊千璽|易烊千玺|jackson yee/i),
-  more("cn", "karrywang", "王俊凱", ["王俊凱", "王俊凯", "Karry Wang"], /王俊凱|王俊凯|karry wang/i),
+  more("cn", "roywang", "王源", ["王源", "Roy Wang"], /^王源($|\s*[,&])|^roy wang(\s*[,&]|$)/i, { related: ["tfboys"] }),
+  more("cn", "jacksonyee", "易烊千璽", ["易烊千璽", "易烊千玺", "Jackson Yee"], /易烊千璽|易烊千玺|jackson yee/i, { related: ["tfboys"] }),
+  more("cn", "karrywang", "王俊凱", ["王俊凱", "王俊凯", "Karry Wang"], /王俊凱|王俊凯|karry wang/i, { related: ["tfboys"] }),
   more("cn", "tfboys", "TFBOYS", ["TFBOYS"], /^tfboys(\s*[,&]|$)/i),
   more("cn", "tnt", "時代少年團", ["時代少年團", "时代少年团"], /時代少年團|时代少年团|teens in times/i),
   more("cn", "kun", "蔡徐坤", ["蔡徐坤", "KUN"], /蔡徐坤|cai xukun/i),
@@ -497,12 +498,12 @@ window.ARTISTS.push(
   more("kr", "babymonster", "BABYMONSTER", ["BABYMONSTER"], /^babymonster(\s*[,&]|$)/i),
   more("kr", "day6", "DAY6", ["DAY6"], /^day6(\s*[,&]|$)/i),
   more("kr", "bigbang", "BIGBANG", ["BIGBANG"], /^big ?bang(\s*[,&]|$)/i),
-  more("kr", "gdragon", "G-DRAGON", ["G-DRAGON"], /g-dragon/i, { short: "GD" }),
-  more("kr", "rose", "ROSÉ", ["ROSÉ", "Rose"], /^ros[eé](\s*[,&]|$)/i),
-  more("kr", "jennie", "JENNIE", ["JENNIE"], /^jennie(\s*[,&]|$)/i),
-  more("kr", "jisoo", "JISOO", ["JISOO"], /^jisoo(\s*[,&]|$)/i),
-  more("kr", "jimin", "Jimin", ["Jimin"], /^jimin(\s*[,&]|$)/i),
-  more("kr", "jungkook", "Jung Kook", ["Jung Kook"], /^jung ?kook(\s*[,&]|$)/i),
+  more("kr", "gdragon", "G-DRAGON", ["G-DRAGON"], /g-dragon/i, { short: "GD", related: ["bigbang"] }),
+  more("kr", "rose", "ROSÉ", ["ROSÉ", "Rose"], /^ros[eé](\s*[,&]|$)/i, { related: ["blackpink"] }),
+  more("kr", "jennie", "JENNIE", ["JENNIE"], /^jennie(\s*[,&]|$)/i, { related: ["blackpink"] }),
+  more("kr", "jisoo", "JISOO", ["JISOO"], /^jisoo(\s*[,&]|$)/i, { related: ["blackpink"] }),
+  more("kr", "jimin", "Jimin", ["Jimin"], /^jimin(\s*[,&]|$)/i, { related: ["bts"] }),
+  more("kr", "jungkook", "Jung Kook", ["Jung Kook"], /^jung ?kook(\s*[,&]|$)/i, { related: ["bts"] }),
   more("kr", "txt", "TOMORROW X TOGETHER", ["TOMORROW X TOGETHER", "TXT"], /tomorrow x together/i, { short: "TXT" }),
   more("kr", "enhypen", "ENHYPEN", ["ENHYPEN"], /^enhypen(\s*[,&]|$)/i),
   more("kr", "nctdream", "NCT DREAM", ["NCT DREAM"], /^nct dream(\s*[,&]|$)/i),
@@ -516,7 +517,7 @@ window.ARTISTS.push(
   more("kr", "boynextdoor", "BOYNEXTDOOR", ["BOYNEXTDOOR"], /boynextdoor/i),
   more("kr", "zb1", "ZEROBASEONE", ["ZEROBASEONE"], /zerobaseone/i),
   more("kr", "ateez", "ATEEZ", ["ATEEZ"], /^ateez(\s*[,&]|$)/i),
-  more("kr", "taeyeon", "TAEYEON", ["TAEYEON"], /^taeyeon(\s*[,&]|$)/i),
+  more("kr", "taeyeon", "TAEYEON", ["TAEYEON"], /^taeyeon(\s*[,&]|$)/i, { related: ["snsd"] }),
   more("kr", "qwer", "QWER", ["QWER"], /^qwer(\s*[,&]|$)/i),
   more("kr", "plave", "PLAVE", ["PLAVE"], /^plave(\s*[,&]|$)/i),
   more("kr", "hearts2hearts", "Hearts2Hearts", ["Hearts2Hearts"], /hearts2hearts/i),
@@ -610,7 +611,7 @@ window.ARTISTS.push(
 
   // 泰國
   // 區分大小寫，避免和日本的 LiSA 混在一起
-  more("th", "lisa", "LISA", ["LISA", "Lalisa"], /^LISA(\s*[,&]|$)/),
+  more("th", "lisa", "LISA", ["LISA", "Lalisa"], /^LISA(\s*[,&]|$)/, { related: ["blackpink"] }),
   more("th", "jeffsatur", "Jeff Satur", ["Jeff Satur"], /jeff satur/i),
   more("th", "tillybirds", "Tilly Birds", ["Tilly Birds"], /tilly birds/i),
   more("th", "fhero", "F.HERO", ["F.HERO"], /^f\.?hero(\s*[,&]|$)/i),
