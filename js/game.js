@@ -662,7 +662,11 @@
   function renderOptions(song) {
     let options;
     if (state.mode === "artist") {
-      const others = shuffle(state.group.artists.filter((id) => id !== song.key)).slice(0, 3);
+      // 合唱歌上掛名的其他歌手、同團的團員都不能當錯誤選項，不然選了也算對
+      const answer = byId(song.key);
+      const clash = (a) =>
+        a.match.test(song.artist || "") || (a.related || []).includes(answer.id) || (answer.related || []).includes(a.id);
+      const others = shuffle(state.group.artists.filter((id) => id !== song.key && !clash(byId(id)))).slice(0, 3);
       options = shuffle([song.key, ...others]).map((id) => ({ key: id, title: byId(id).name }));
     } else if (isTextMode(state.mode)) {
       const q = song.lyricQ;
